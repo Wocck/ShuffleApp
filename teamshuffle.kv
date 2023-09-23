@@ -1,0 +1,182 @@
+#:import Factory kivy.factory.Factory
+<Confirmation@Popup>
+    auto_dismiss: False
+    title: 'Are you sure about that?!'
+    BoxLayout:
+        spacing: '10dp'
+        padding: '20dp'
+        Button:
+            halign: 'center'
+            valign: 'center'
+            text: 'Yes'
+            background_color: 0.2, 0.7, 0.3, 1
+            on_release:
+                app.root.remove_all_players_action()
+                root.dismiss()
+        Button:
+            halign: 'center'
+            valign: 'center'
+            text: 'No'
+            background_color: 0.9, 0.2, 0.2, 1
+            background_color: 0.9, 0.2, 0.2, 1
+            on_release:
+                root.dismiss()
+
+
+<MyRoot>:
+    BoxLayout:
+        size: root.width, root.height
+        orientation: 'vertical'
+        spacing: '10dp'
+        padding: '20dp'
+
+        BoxLayout:
+            orientation: 'horizontal'
+            spacing: '20dp'
+            size_hint_y: None
+            height: '40dp'
+
+            TextInput:
+                id: add_player_input
+                halign: 'center'
+                valign: 'middle'
+                hint_text: 'name'
+                size_hint_x: 0.7
+                background_color: 0.9, 0.9, 0.9, 1
+                border: (10, 10, 10, 10)
+
+            Button:
+                halign: 'center'
+                valign: 'center'
+                text: 'Add'
+                size_hint_x: 0.3
+                background_color: 0.2, 0.7, 0.3, 1
+                border: (10, 10, 10, 10)
+                on_press: root.add_player_action()
+
+        BoxLayout:
+            orientation: 'horizontal'
+            spacing: '20dp'
+            size_hint_y: None
+            height: '40dp'
+
+            TextInput:
+                id: remove_player_input
+                halign: 'center'
+                valign: 'middle'
+                hint_text: 'name'
+                size_hint_x: 0.7
+                background_color: 0.9, 0.9, 0.9, 1
+                border: (10, 10, 10, 10)
+
+            Button:
+                halign: 'center'
+                valign: 'center'
+                text: 'Remove'
+                size_hint_x: 0.3
+                background_color: 0.9, 0.2, 0.2, 1
+                border: (10, 10, 10, 10)
+                on_press: root.remove_player_action()
+
+        BoxLayout:
+            orientation: 'horizontal'
+            spacing: '20dp'
+            size_hint_y: None
+            height: '40dp'
+            pos_hint: {'center_x': 0.5}
+
+            Button:
+                halign: 'center'
+                valign: 'center'
+                text: 'Select All'
+                size_hint_x: None
+                width: '100dp'
+                background_color: 0.19, 0.57, 0.65, 1
+                border: (10, 10, 10, 10)
+                on_press: root.select_all_players_action()
+
+            Button:
+                halign: 'center'
+                valign: 'center'
+                text: 'Remove All'
+                size_hint_x: None
+                width: '100dp'
+                background_color: 0.9, 0.2, 0.2, 1
+                border: (10, 10, 10, 10)
+                on_release: Factory.Confirmation().open()
+                #root.remove_all_players_action()
+
+        BoxLayout:
+            orientation: 'horizontal'
+            canvas.before:
+                Color:
+                    rgba: 0.19, 0.57, 0.65, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            ScrollView:
+                effect_cls: 'OpacityScrollEffect'
+                size: self.size
+                GridLayout:
+                    height: self.minimum_height
+                    size_hint_y: None
+                    padding: '5dp'
+                    spacing: '30dp'
+                    id: player_list
+                    cols: 2
+
+        BoxLayout:
+            orientation: 'horizontal'
+            spacing: '20dp'
+            size_hint_y: None
+            height: '40dp'
+
+            Button:
+                on_press: root.shuffle_action()
+                text: 'Shuffle'
+                size_hint_x: None
+                width: '100dp'
+                background_color: 0.3, 0.3, 0.9, 1
+                border: (10, 10, 10, 10)
+            Label:
+                id: count_label
+                text: '0'
+                width: '20dp'
+                canvas.before:
+                    Color:
+                        rgba: 0.5, 0.5, 0.5, 1  # Adjust the color as needed (gray in this example)
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+                background_color: 0, 0, 0, 0
+
+                border: (10, 10, 10, 10)
+
+        BoxLayout:
+            orientation: 'vertical'
+            canvas.before:
+                Color:
+                    rgba: 0.15, 0.313, 0.845, 0.8
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            Label:
+                id: team1_label
+                text: 'Team 1:'
+                text_size: root.width, None
+                size: self.texture_size
+                font_name: 'Roboto-BoldItalic'
+                multiline: True  # Allow text to wrap to multiple lines
+                halign: 'left'
+                padding_x: 70
+
+            Label:
+                id: team2_label
+                text: 'Team 2:'
+                text_size: root.width, None
+                size: self.texture_size
+                font_name: 'Roboto-BoldItalic'
+                multiline: True
+                halign: 'left'
+                padding_x: 70
+
